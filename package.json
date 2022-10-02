@@ -2,7 +2,7 @@
   "name": "react-native-localization",
   "version": "2.3.1",
   "description": "Simple module to localize the ReactNative interface",
-  "main": "./lib/LocalizedStrings.js",
+  "main": "./src/LocalizedStrings.js",
   "types": "./lib/LocalizedStrings.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

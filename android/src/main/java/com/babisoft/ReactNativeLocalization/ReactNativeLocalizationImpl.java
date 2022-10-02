@@ -12,23 +12,18 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * Created by stefano on 20/09/15.
- */
-public class ReactNativeLocalization extends ReactContextBaseJavaModule {
 
+public class ReactNativeLocalizationImpl {
+
+    public static final String NAME = "ReactLocalization";
     /**
      * Name of the exported variable
      */
     private static final String LANGUAGE = "language";
+    private ReactApplicationContext context;
 
-    public ReactNativeLocalization(ReactApplicationContext reactContext) {
-        super(reactContext);
-    }
-
-    @Override
-    public String getName() {
-        return "ReactLocalization";
+    public ReactNativeLocalizationImpl(ReactApplicationContext reactContext) {
+        this.context = reactContext;
     }
 
     /**
@@ -44,7 +39,7 @@ public class ReactNativeLocalization extends ReactContextBaseJavaModule {
             return userLocale;
         }
         
-        Locale current = getReactApplicationContext().getResources().getConfiguration().locale;
+        Locale current = context.getResources().getConfiguration().locale;
         return current.getLanguage() + "-" + current.getCountry();
     }
 
@@ -59,7 +54,7 @@ public class ReactNativeLocalization extends ReactContextBaseJavaModule {
      *
      * @return
      */
-    @Override
+
     public Map<String, Object> getConstants() {
         final Map<String, Object> constants = new HashMap<>();
         constants.put(LANGUAGE, getCurrentLanguage());
@@ -71,7 +66,6 @@ public class ReactNativeLocalization extends ReactContextBaseJavaModule {
      *
      * @param callback
      */
-    @ReactMethod
     public void getLanguage(Callback callback) {
         String language = getCurrentLanguage();
         System.out.println("The current language is " + language);
@@ -82,8 +76,9 @@ public class ReactNativeLocalization extends ReactContextBaseJavaModule {
      * SharedPreferences
      */
     private SharedPreferences getPreferences() {
-        return getReactApplicationContext().getSharedPreferences("react-native", Context.MODE_PRIVATE);
+        return context.getSharedPreferences("react-native", Context.MODE_PRIVATE);
     }
+
     private SharedPreferences.Editor getEditor() {
         return getPreferences().edit();
     }

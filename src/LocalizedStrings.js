@@ -17,7 +17,13 @@ import LocalizedStringsCore from "react-localization";
 /**
  * Import the native module
  */
-const localization = NativeModules.ReactLocalization;
+ console.log('r')
+const isTurboModuleEnabled = global.__turboModuleProxy != null;
+const module = !isTurboModuleEnabled ? NativeModules.ReactLocalization : require('../codegen/NativeLocalization').default;
+const localization = !isTurboModuleEnabled ? module : module.getConstants();
+
+
+console.log(localization)
 /**
  * Check if the native module has been correctly initialized
  */
